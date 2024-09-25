@@ -27,7 +27,7 @@ const student2: Student = {
 const studentsList: Student[] = [student1, student2];
 
 // Function to render the table
-function renderTable() {
+function renderTable(): void {
   const table = document.createElement('table');
   const headerRow = document.createElement('tr');
   const header1 = document.createElement('th');
