@@ -10,6 +10,11 @@ interface Teacher {
   [propName: string]: unknown;
 }
 
+// Définir l'interface Directors qui étend Teacher
+interface Directors extends Teacher {
+  numberOfReports: number;
+}
+
 // Exemple d'utilisation de l'interface Teacher
 const teacher3: Teacher = {
   firstName: 'John',
@@ -20,3 +25,14 @@ const teacher3: Teacher = {
 };
 
 console.log(teacher3);
+
+// Exemple d'utilisation de l'interface Directors
+const director1: Directors = {
+  firstName: 'John',
+  lastName: 'Doe',
+  location: 'London',
+  fullTimeEmployee: true,
+  numberOfReports: 17,
+};
+
+console.log(director1);
