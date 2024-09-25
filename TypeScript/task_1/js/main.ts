@@ -7,7 +7,7 @@ interface Teacher {
   fullTimeEmployee: boolean;
   yearsOfExperience?: number;
   location: string;
-  [propName: string]: any;
+  [propName: string]: unknown;
 }
 
 // Exemple d'utilisation de l'interface Teacher
