@@ -1,59 +1,4 @@
-// task_1/js/main.ts
-
-// Définir l'interface Teacher
-interface Teacher {
-  firstName: string;
-  lastName: string;
-  fullTimeEmployee: boolean;
-  yearsOfExperience?: number;
-  location: string;
-  [propName: string]: unknown;
-}
-
-// Définir l'interface Directors qui étend Teacher
-interface Directors extends Teacher {
-  numberOfReports: number;
-}
-
-// Définir l'interface pour la fonction printTeacher
-interface PrintTeacherFunction {
-  (firstName: string, lastName: string): string;
-}
-
-// Implémenter la fonction printTeacher
-const printTeacher: PrintTeacherFunction = (firstName, lastName) => {
-  return `${firstName.charAt(0)}. ${lastName}`;
-};
-
-// Définir l'interface pour le constructeur de StudentClass
-interface StudentClassConstructor {
-  new (firstName: string, lastName: string): StudentClassInterface;
-}
-
-// Définir l'interface pour StudentClass
-interface StudentClassInterface {
-  workOnHomework(): string;
-  displayName(): string;
-}
-
-// Implémenter la classe StudentClass
-class StudentClass implements StudentClassInterface {
-  firstName: string;
-  lastName: string;
-
-  constructor(firstName: string, lastName: string) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
-
-  workOnHomework(): string {
-    return "Currently working";
-  }
-
-  displayName(): string {
-    return this.firstName;
-  }
-}
+// task_2/js/main.ts
 
 // Définir l'interface DirectorInterface
 interface DirectorInterface {
@@ -108,58 +53,36 @@ function createEmployee(salary: number | string): Director | Teacher {
   }
 }
 
-// Exemple d'utilisation de l'interface Teacher
-const teacher3: Teacher = {
-  firstName: 'John',
-  fullTimeEmployee: false,
-  lastName: 'Doe',
-  location: 'London',
-  contract: false,
-  workFromHome(): string {
-    return "Cannot work from home";
-  },
-  getCoffeeBreak(): string {
-    return "Cannot have a break";
-  },
-  workTeacherTasks(): string {
-    return "Getting to work";
+// Fonction isDirector
+function isDirector(employee: Director | Teacher): employee is Director {
+  return (employee as Director).workDirectorTasks !== undefined;
+}
+
+// Fonction executeWork
+function executeWork(employee: Director | Teacher): string {
+  if (isDirector(employee)) {
+    return employee.workDirectorTasks();
+  } else {
+    return employee.workTeacherTasks();
   }
-};
+}
 
-console.log(teacher3);
+// Exemple d'utilisation de la fonction createEmployee et executeWork
+console.log(executeWork(createEmployee(200))); // Getting to work
+console.log(executeWork(createEmployee(1000))); // Getting to director tasks
 
-// Exemple d'utilisation de l'interface Directors
-const director1: Directors = {
-  firstName: 'John',
-  lastName: 'Doe',
-  location: 'London',
-  fullTimeEmployee: true,
-  numberOfReports: 17,
-  workFromHome(): string {
-    return "Working from home";
-  },
-  getCoffeeBreak(): string {
-    return "Getting a coffee break";
-  },
-  workDirectorTasks(): string {
-    return "Getting to director tasks";
-  },
-  workTeacherTasks(): string {
-    return "Getting to work";
+// Définir le type littéral Subjects
+type Subjects = "Math" | "History";
+
+// Fonction teachClass
+function teachClass(todayClass: Subjects): string {
+  if (todayClass === "Math") {
+    return "Teaching Math";
+  } else {
+    return "Teaching History";
   }
-};
+}
 
-console.log(director1);
-
-// Exemple d'utilisation de la fonction printTeacher
-console.log(printTeacher("John", "Doe")); // J. Doe
-
-// Exemple d'utilisation de la classe StudentClass
-const student = new StudentClass("Jane", "Smith");
-console.log(student.displayName()); // Jane
-console.log(student.workOnHomework()); // Currently working
-
-// Exemple d'utilisation de la fonction createEmployee
-console.log(createEmployee(200)); // Teacher
-console.log(createEmployee(1000)); // Director
-console.log(createEmployee('$500')); // Director
+// Exemple d'utilisation de la fonction teachClass
+console.log(teachClass("Math")); // Teaching Math
+console.log(teachClass("History")); // Teaching History
